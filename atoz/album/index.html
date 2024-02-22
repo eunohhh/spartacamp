@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>나만의 추억앨범</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+        * {
+            font-family: "Nanum Gothic", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .mytitle {
+            background-color: green;
+            height: 250px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url("https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80");
+            background-position: center;
+            background-size: cover;
+        }
+
+        .mytitle > button {
+            width: 150px;
+            height: 50px;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .mycards{
+            width: 1200px;
+            margin: 30px auto 0 auto;
+        }
+
+        .mypostingbox{
+            width: 500px;
+            margin: 30px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0 0 3px 0 blue;
+        }
+
+        .mybtn{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        .mybtn > button{
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mytitle">
+        <h1>나만의 추억앨범</h1>
+        <button>추억 저장하기</button>
+    </div>
+
+    <div class="mypostingbox">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 이미지">
+            <label for="floatingInput">앨범 이미지</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 제목">
+            <label for="floatingInput">앨범 제목</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 내용">
+            <label for="floatingInput">앨범 내용</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="앨범 날짜">
+            <label for="floatingInput">앨범 날짜</label>
+        </div>
+        <div class="mybtn">
+            <button type="button" class="btn btn-dark">기록하기</button>
+            <button type="button" class="btn btn-outline-dark">닫기</button>
+        </div>
+    </div>
+
+    <div class="mycards">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">앨범 제목</h5>
+                        <p class="card-text">앨범 내용</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">앨범 날짜</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">앨범 제목</h5>
+                        <p class="card-text">앨범 내용</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">앨범 날짜</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">앨범 제목</h5>
+                        <p class="card-text">앨범 내용</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">앨범 날짜</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">앨범 제목</h5>
+                        <p class="card-text">앨범 내용</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">앨범 날짜</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
