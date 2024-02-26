@@ -76,16 +76,59 @@
             width: 100%;
         }
     </style>
-    <script>
-        function openClose(){
-            $('#postingbox').toggle();
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Firebase 구성 정보 설정
+        const firebaseConfig = {
+            apiKey: "AIzaSyDoSZ9CzLrW1pQTv3uxnuLbC9UXn3wR-B8",
+            authDomain: "sparta-526f1.firebaseapp.com",
+            projectId: "sparta-526f1",
+            storageBucket: "sparta-526f1.appspot.com",
+            messagingSenderId: "379382889613",
+            appId: "1:379382889613:web:39ce3200219b23609576c4",
+            measurementId: "G-NZKG1SGWS5" 
         };
 
-        function makeCard(){
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        $("#postingbtn").click(async function () {
             const image = $('#image').val();
             const title = $('#title').val();
             const star = $('#star').val();
             const comment = $('#comment').val();
+
+            const doc = {
+                image: image,
+                title: title,
+                star: star,   
+                comment : comment
+            };
+            await addDoc(collection(db, "movies"), doc);
+            alert('저장완료');
+            window.location.reload();
+        });
+
+        $("#savebtn").click(async function () {
+            $('#postingbox').toggle();
+        });
+
+
+        let docs = await getDocs(collection(db, "movies"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            console.log(row);
+
+            const image = row.image;
+            const title = row.title;
+            const star = row.star;
+            const comment = row.comment;
 
             const temp_html = `
             <div class="col">
@@ -100,24 +143,7 @@
                 </div>
             </div>`
             $('#card').append(temp_html);
-        };
-
-        $(document).ready(function () {
-            let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    const temperature = data.temp
-                    console.log(temperature);
-                    let hotOrCold = '';
-                    if(temperature >= 20){
-                        hotOrCold = '더워요';
-                    }else{
-                        hotOrCold = '추워요';
-                    }
-                    $('#temperature').text(hotOrCold);
-                });
-        });
+        }); 
     </script>
 </head>
 
@@ -160,7 +186,7 @@
                 <h1 class="display-5 fw-bold">킹덤</h1>
                 <p class="col-md-8 fs-4">병든 왕을 둘러싸고 흉흉한 소문이 떠돈다. 어둠에 뒤덮인 조선, 기이한 역병에 신음하는 산하. 정체 모를 악에 맞서 백성을 구원할 희망은 오직
                     세자뿐이다.</p>
-                <button class="btn btn-outline-light" type="button" onclick="openClose()">영화 기록하기</button>
+                <button class="btn btn-outline-light" type="button" id="savebtn">영화 기록하기</button>
                 <button class="btn btn-outline-light" type="button">상세정보</button>
             </div>
         </div>
@@ -191,13 +217,13 @@
             <label for="floatingInput">추천 이유</label>
         </div>
         <div class="mybtn">
-            <button type="button" class="btn btn-danger" onclick="makeCard()">기록하기</button>
+            <button type="button" class="btn btn-danger" id="postingbtn">기록하기</button>
         </div>
     </div>
 
     <div class="mycards">
         <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col">
+            <!-- <div class="col">
                 <div class="card h-100">
                     <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
                         class="card-img-top" alt="...">
@@ -240,7 +266,7 @@
                         <p class="card-text">영화 코멘트</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

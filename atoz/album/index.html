@@ -62,15 +62,74 @@
             margin-right: 5px;
         }
     </style>
-    <script>
-        function openClose(){
-            $('#postingbox').toggle();
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // Firebase 구성 정보 설정
+        const firebaseConfig = {
+            apiKey: "AIzaSyDoSZ9CzLrW1pQTv3uxnuLbC9UXn3wR-B8",
+            authDomain: "sparta-526f1.firebaseapp.com",
+            projectId: "sparta-526f1",
+            storageBucket: "sparta-526f1.appspot.com",
+            messagingSenderId: "379382889613",
+            appId: "1:379382889613:web:39ce3200219b23609576c4",
+            measurementId: "G-NZKG1SGWS5" 
         };
-        function makeCard(){
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        $("#postingbtn").click(async function () {
             const image = $('#image').val();
             const title = $('#title').val();
             const content = $('#content').val();
             const date = $('#date').val();
+
+            const doc = {
+                image: image,
+                title: title,
+                content: content,   
+                date : date
+            };
+            await addDoc(collection(db, "albums"), doc);
+            alert('저장완료');
+            window.location.reload();
+        });
+
+        $("#savebtn").click(async function () {
+            $('#postingbox').toggle();
+        });
+        function openClose(){
+            $('#postingbox').toggle();
+        };
+
+        // $(document).ready(function () {
+        // })
+
+        let url = "http://spartacodingclub.shop/sparta_api/seoulair";
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                const mise = data.RealtimeCityAir.row[0]['IDEX_NM'];
+                console.log(mise);
+                $('#msg').text(mise)
+            });
+
+        let docs = await getDocs(collection(db, "albums"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            console.log(row);
+
+            const image = row.image;
+            const title = row.title;
+            const content = row.content;
+            const date = row.date;
 
             const temp_html = `
             <div class="col">
@@ -86,19 +145,7 @@
                 </div>
             </div>`
             $('#card').append(temp_html);
-        };
-
-        $(document).ready(function () {
-            let url = "http://spartacodingclub.shop/sparta_api/seoulair";
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    const mise = data.RealtimeCityAir.row[0]['IDEX_NM'];
-                    console.log(mise);
-                    $('#msg').text(mise)
-                });
-        })
-
+        }); 
         
     </script>
 </head>
@@ -107,7 +154,7 @@
     <div class="mytitle">
         <h1>나만의 추억앨범</h1>
         <p>현재 서울의 미세먼지 : <span id="msg"></span></p>
-        <button onclick="openClose()">추억 저장하기</button>
+        <button id="savebtn">추억 저장하기</button>
     </div>
 
     <div class="mypostingbox" id="postingbox">
@@ -128,14 +175,14 @@
             <label for="floatingInput">앨범 날짜</label>
         </div>
         <div class="mybtn">
-            <button type="button" class="btn btn-dark" onclick="makeCard()">기록하기</button>
+            <button id="postingbtn" type="button" class="btn btn-dark" >기록하기</button>
             <button type="button" class="btn btn-outline-dark">닫기</button>
         </div>
     </div>
 
     <div class="mycards">
         <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
-            <div class="col">
+            <!-- <div class="col">
                 <div class="card h-100">
                     <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -182,7 +229,7 @@
                         <small class="text-body-secondary">앨범 날짜</small>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </body>
