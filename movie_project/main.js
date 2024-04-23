@@ -1,27 +1,40 @@
+// 이것저것 선택자
 const cardsWrapper = document.getElementById('cards_wrapper');
 const searchInput = document.getElementById('search_input');
 const searchButton = document.querySelector('.search_submit');
 const langButton = document.querySelector('.lang_change');
 const topButton = document.getElementById('top_button');
-// 바디 선택(모달을 바디에 붙일예정)
+const kr = langButton.lastElementChild;
+const en = langButton.firstElementChild;
+
 const body = document.body;
+// 검색어 입력 값 저장용 변수
 let searchValue = '';
+// 엔터 두번째인지 판정용 변수
 let isDoubleEnter = false;
+// get 요청할 때 몇번째 페이지로 요청할지 증가하는 변수
 let page = 1;
+// 국영문 제어용 변수
 let currLang = 'ko';
+// 무한스크롤시 계속 추가되는 객체들 이전과 비교하기 위한 상태 변수
 let pastMoviesData = {
     page : 0,
     results: [],
     total_pages : 0,
     total_results : 0
 };
-let baseMovies = {};
+// 무한스크롤로 객체가 추가되어도 계속 검색이 가능하도록 하기 위해 
+// 검색용으로 객체를 계속 추가하는 변수
 let searchBase = [];
 
+// 영화 목록 get 요청하는 함수
 const getMovies = async (lang, page) => {
 
+    // 검색결과 중복 오류가 자꾸 나서
+    // 방지용으로 만든 임시 객체??
     let mergedMoviesData = {};
 
+    // 언어 변경용
     let langSet = '';
     if(lang === "ko"){
         langSet = 'ko-kr';
@@ -55,7 +68,11 @@ const getMovies = async (lang, page) => {
          * total_results : 전체 영화 수
          */
 
-        if(page > 0){
+        // 페이지가 0 이면 즉 첫번째 get 요청이면
+        if(page === 0){
+            mergedMoviesData = result;
+            searchBase = [...result.results];
+        }else{
             mergedMoviesData = {
                 page : result.page,
                 results : [...pastMoviesData.results, ...result.results],
@@ -63,13 +80,10 @@ const getMovies = async (lang, page) => {
                 total_results : result.total_results
             }
             searchBase = [...pastMoviesData.results, ...result.results]
-        }else{
-            mergedMoviesData = result;
-            searchBase = [...result.results];
         }
 
         pastMoviesData = mergedMoviesData;
-        
+
         return result;
 
     }catch(error){
@@ -137,27 +151,7 @@ const drawMovies = async (lang, reset) => {
 
     cardsWrapper.insertAdjacentHTML('beforeend', movieCardsHtml);
 
-    baseMovies = movies;
-
     return movies;
-}
-
-const searching = (_, searched) => {
-
-    if(searched.length === 0) {
-        alert('검색어를 입력하세요!');
-        return;
-    }
-
-    const filtered = searchBase.filter(e => {
-        return e.title.includes(searched);
-    });
-
-    if(filtered.length > 0){
-        return filtered;
-    }else{
-        return [];
-    }
 }
 
 const insertModal = () => {
@@ -188,7 +182,8 @@ const handleSearchClickOrEnter = (e, searched) => {
     const movieCardsHtml = moviesToHtml(searchResult, true);
 
     modalFull.addEventListener("click", (e) => {
-        if (e.target.className === 'searched_inner') e.currentTarget.remove();
+        console.log(e.target.className)
+        if (e.target.className === 'searched_modal' || e.target.className === 'searched_inner') e.currentTarget.remove();
     });
 
     modalFull.firstChild.insertAdjacentHTML('beforeend', movieCardsHtml)
@@ -215,6 +210,24 @@ const handleCardClick = (e) => {
     }
 }
 
+const searching = (_, searched) => {
+
+    if(searched.length === 0) {
+        alert('검색어를 입력하세요!');
+        return;
+    }
+
+    const filtered = searchBase.filter(e => {
+        return e.title.includes(searched);
+    });
+
+    if(filtered.length > 0){
+        return filtered;
+    }else{
+        return [];
+    }
+}
+
 const observeLastCard = (observer) => {
 
     const cards = document.querySelectorAll('.card');
@@ -231,8 +244,8 @@ const ioObserver = (entries, observer) => {
         const { target } = entry;
 
         if(entry.isIntersecting){
-            observer.unobserve(target);
             page ++;
+            observer.unobserve(target);
             // 여기서 분기처리
             await drawMovies(currLang, false);
             observeLastCard(observer);
@@ -242,19 +255,32 @@ const ioObserver = (entries, observer) => {
 
 const handleLangButton = async (_, io, button) => {
     const currentTargetLang = button.dataset.lang;
-
+    const headerH1 = document.querySelector('header h1');
+    
     if(currentTargetLang === 'ko'){
         page = 1;
         button.dataset.lang = 'en';
         currLang = 'en';
         await drawMovies('en', true);
         observeLastCard(io);
+        headerH1.innerText = 'movieAllmovies';
+        searchInput.placeholder = "Let's Search for A Movie";
+        searchButton.innerText = "search";
+        en.style.textShadow = '1px 1px 2px white, 0 0 1em white, 0 0 0.2em white';
+        en.style.color = 'white';
+        kr.style.color = '#cfcfcf';
     }else if(currentTargetLang === 'en'){
         page = 1;
         button.dataset.lang = 'ko';
         currLang = 'ko';
         await drawMovies('ko', true);
         observeLastCard(io);
+        headerH1.innerText = '영화다영화';
+        searchInput.placeholder = "영화를 검색해보자";
+        searchButton.innerText = "검색";
+        kr.style.textShadow = '1px 1px 2px white, 0 0 1em white, 0 0 0.2em white';
+        kr.style.color = 'white';
+        en.style.color = '#cfcfcf';
     }
 }
 
@@ -286,7 +312,7 @@ const init = async () => {
 
     // 인터섹션 옵서버 생성 및 콜백 적용
     // 옵저브 시작 함수 실행
-    const intersectionObserver = new IntersectionObserver((entries, observer) => ioObserver(entries, observer));
+    const intersectionObserver = new IntersectionObserver((entries, observer) => ioObserver(entries, observer), {threshold: 0.9});
     observeLastCard(intersectionObserver);
 
     // 언어전환버튼에 이벤트 리스너 장착

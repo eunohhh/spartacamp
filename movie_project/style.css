@@ -29,6 +29,20 @@ body {
     font-style: normal;
 }
 
+body::-webkit-scrollbar{
+    width: 6px;  /* 스크롤바의 너비 */
+}
+
+body::-webkit-scrollbar-thumb{
+    height: auto; /* 스크롤바의 길이 */
+    background: var(--sub-color); /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track{
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
+
 #top_button{
     position: fixed;
     display: flex;
@@ -127,6 +141,14 @@ header h1{
     outline: none;
 }
 
+.lang_change span:nth-child(1){
+    color: #cfcfcf;
+}
+
+.lang_change span:nth-child(2){
+    text-shadow: 1px 1px 2px white, 0 0 1em white, 0 0 0.2em white;
+}
+
 #search_wrapper{
     position: relative;
     width: 100%;
@@ -219,7 +241,7 @@ header h1{
     background-color: rgb(255, 236, 255);
     /* width: 100%; */
     height: auto;
-    min-height: 55rem;
+    max-height: 55rem;
     padding: 10px;
     border-radius: 15px;
     box-shadow: 5px 5px 5px rgba(167, 110, 167, 0.4);
@@ -340,6 +362,19 @@ header h1{
     }
     #search_input {
         width: 400px;
+    }
+    .modal-card{
+        height: 80vh;
+    }
+    .modal-card .movie_poster_box {
+        height: 15rem;
+    }
+    .movie_info{
+        height: 18rem;
+    }
+    .movie_info h2{
+        margin-block-start: 5px;
+        margin-block-end: 5px;
     }
 }
 
