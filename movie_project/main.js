@@ -258,6 +258,16 @@ const handleLangButton = async (_, io, button) => {
     }
 }
 
+const handleSearchInput = event => {
+    let value = event.target.value;
+    const regex = /[a-zA-Z]/;
+    if(regex.test(value)){
+        searchValue = value.toLowerCase();
+    }else{
+        searchValue = value;
+    }
+};
+
 const handleTopButton = () => {
     window.scrollTo({
         left: 0,
@@ -267,25 +277,31 @@ const handleTopButton = () => {
 }
 
 const init = async () => {
+    // 시작과 함께, 영화 목록 받아오기
     await drawMovies(currLang, false);
-
+    // 탑버튼에 이벤트리스너 장착
     topButton.addEventListener('click', handleTopButton)
+    // 검색버튼에 포커스
+    searchInput.focus();
 
+    // 인터섹션 옵서버 생성 및 콜백 적용
+    // 옵저브 시작 함수 실행
     const intersectionObserver = new IntersectionObserver((entries, observer) => ioObserver(entries, observer));
     observeLastCard(intersectionObserver);
 
+    // 언어전환버튼에 이벤트 리스너 장착
     langButton.addEventListener('click', (e) => handleLangButton(e, intersectionObserver, langButton));
 
+    // 카드 클릭시 id 출력하는 이벤트 리스너 장착
     cardsWrapper.addEventListener('click', handleCardClick);
 
-    
-    
-    const handleSearchInput = event => searchValue = event.target.value;
+    // 검색값 받아오는 이벤트 리스너 장착
     searchInput.addEventListener("input", handleSearchInput);
     
+    // 검색버튼 누를시 검색 실행하는 이벤트 리스너 장착
     searchButton.addEventListener('click', (e) => handleSearchClickOrEnter(e, searchValue));
+    // 엔터키 눌러도 똑같이 동작하도록 하는 이벤트 리스너 장착
     searchInput.addEventListener('keydown', (e) => handleKeyDown(e, isDoubleEnter, searchValue));
-    
 }
 
 init();

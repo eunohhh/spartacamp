@@ -315,3 +315,48 @@ header h1{
     width: auto;
     height: 100%;
 }
+
+@media (max-width: 1400px) {
+    #cards_wrapper{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    #cards_wrapper{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    #cards_wrapper{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #cards_wrapper{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    #search_input {
+        width: 400px;
+    }
+}
+
+@media (max-width: 576px) {
+    #search_input {
+        width: 260px;
+    }
+    #app h1{
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #search_input {
+        width: 220px;
+    }
+    #app h1{
+        font-size: 1.7rem;
+    }
+}
