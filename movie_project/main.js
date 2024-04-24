@@ -328,7 +328,7 @@ const init = async () => {
 
     // 인터섹션 옵서버 생성 및 콜백 적용
     // 옵저브 시작 함수 실행
-    const intersectionObserver = new IntersectionObserver((entries, observer) => ioObserver(entries, observer), {threshold: 0.9});
+    const intersectionObserver = new IntersectionObserver((entries, observer) => ioObserver(entries, observer), {threshold: 0.8});
     observeLastCard(intersectionObserver);
 
     // 언어전환버튼에 이벤트 리스너 장착
