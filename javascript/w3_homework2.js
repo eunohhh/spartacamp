@@ -33,6 +33,7 @@ var fighter = {
 
 }
 
-console.log('Not', fighter.opponent.getFullname(), 'VS', fighter.getName());
+// console.log('Not', fighter.opponent.getFullname(), 'VS', fighter.getName());
 // console.log('It is', fighter.getName(), 'VS', fighter.getFirstName(), fighter.getLastName);
+console.log('Not', fighter.opponent.getFullname(), 'VS', fighter.getName());
 console.log('It is', fighter.getName(), 'VS', fighter.getFirstName(), fighter.getLastName.apply({fullname : fullname}));
