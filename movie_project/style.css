@@ -55,7 +55,7 @@ body::-webkit-scrollbar-track{
     color: var(--font-color);
     border: 2px solid var(--sub-color);
     border-radius: 50%;
-    z-index: 999;
+    z-index: 998;
     bottom: 10px;
     right: 10px;
     cursor: pointer;
