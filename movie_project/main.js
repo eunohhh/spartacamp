@@ -41,6 +41,7 @@ function handleOrientationChange() {
 // 영화 목록 get 요청하는 함수
 const getMovies = async (lang, page) => {
 
+    const strPage = String(page);
     // 검색결과 중복 오류가 자꾸 나서
     // 방지용으로 만든 임시 객체??
     let mergedMoviesData = {};
@@ -53,7 +54,7 @@ const getMovies = async (lang, page) => {
         langSet = 'en-US';
     }
 
-    const url = `https://api.themoviedb.org/3/movie/top_rated?language=${langSet}&page=${page}`;
+    const url = `https://api.themoviedb.org/3/movie/top_rated?language=${langSet}&page=${strPage}`;
 
     const req = {
         method: 'GET',
@@ -80,7 +81,7 @@ const getMovies = async (lang, page) => {
          */
 
         // 페이지가 0 이면 즉 첫번째 get 요청이면
-        if(page === 0){
+        if(page === 1){
             mergedMoviesData = result;
             searchBase = [...result.results];
         }else{
@@ -154,7 +155,7 @@ const drawMovies = async (lang, reset) => {
 
     if(reset) cardsWrapper.innerHTML = '';
 
-    const movies = await getMovies(lang, String(page));
+    const movies = await getMovies(lang, page);
 
     // console.log(searchBase)
 
@@ -167,6 +168,7 @@ const drawMovies = async (lang, reset) => {
 
 const insertModal = () => {
 
+    body.style.overflowY = "hidden";
     const modalFull = document.createElement('div');
     modalFull.setAttribute('class', 'searched_modal');
 
@@ -193,7 +195,7 @@ const handleSearchClickOrEnter = (e, searched) => {
     const movieCardsHtml = moviesToHtml(searchResult, true);
 
     modalFull.addEventListener("click", (e) => {
-        console.log(e.target.className)
+        body.style.overflowY = "auto";
         if (e.target.className === 'searched_modal' || e.target.className === 'searched_inner') e.currentTarget.remove();
     });
 
@@ -267,9 +269,8 @@ const ioObserver = (entries, observer) => {
 const handleLangButton = async (_, io, button) => {
     const currentTargetLang = button.dataset.lang;
     const headerH1 = document.querySelector('header h1');
-    
+    page = 1;
     if(currentTargetLang === 'ko'){
-        page = 1;
         button.dataset.lang = 'en';
         currLang = 'en';
         await drawMovies('en', true);
@@ -281,7 +282,6 @@ const handleLangButton = async (_, io, button) => {
         en.style.color = 'white';
         kr.style.color = '#cfcfcf';
     }else if(currentTargetLang === 'en'){
-        page = 1;
         button.dataset.lang = 'ko';
         currLang = 'ko';
         await drawMovies('ko', true);

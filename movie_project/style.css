@@ -304,17 +304,34 @@ header h1{
     flex-direction: column;
     background-color: rgba(0, 0, 0, 0.6);
     width: 100vw;
+    overflow-y: auto;
     height: calc(var(--vh, 1vh) * 100);
     /* min-height: 100vh; */
     top: 0;
     z-index: 999;
+    box-sizing: border-box;
+    /* padding-bottom: 10px; */
 } 
+.searched_modal::-webkit-scrollbar{
+    width: 6px;  /* 스크롤바의 너비 */
+}
+
+.searched_modal::-webkit-scrollbar-thumb{
+    height: auto; /* 스크롤바의 길이 */
+    background: var(--font-color); /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+
+.searched_modal::-webkit-scrollbar-track{
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}
 
 .searched_inner {
     position: relative;
-    /* display: flex; */
+    /* display: flex; calc(var(--vh, 1vh) * 100) */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(22.5%, auto));
+    /* grid-template-rows: repeat(auto-fill, minmax(calc(var(--vh, 1vh) * 80), auto)); */
     justify-content: center;
     /* align-items: center; */
     width: 100%;
@@ -386,8 +403,16 @@ header h1{
         height: 28px;
         font-size: 1rem;
     }
+    
+    .searched_inner {
+        justify-items: center;
+        padding: 10px 0;
+        box-sizing: border-box;
+        grid-template-columns: repeat(1, 1fr);
+    }
     .modal-card{
         height: calc(var(--vh, 1vh) * 80);
+        width: 80%;
     }
     .modal-card .movie_poster_box {
         height: 15rem;
