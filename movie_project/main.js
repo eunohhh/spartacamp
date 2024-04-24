@@ -27,6 +27,17 @@ let pastMoviesData = {
 // 검색용으로 객체를 계속 추가하는 변수
 let searchBase = [];
 
+// css --vh 변수를 위한 innerHeight 사이즈 계산
+function setScreenSize() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+
+// orientationchange 이벤트를 위한 resize 이벤트 트리거 함수
+function handleOrientationChange() {
+    window.dispatchEvent(new Event("resize"));
+};
+
 // 영화 목록 get 요청하는 함수
 const getMovies = async (lang, page) => {
 
@@ -303,6 +314,11 @@ const handleTopButton = () => {
 }
 
 const init = async () => {
+    /** ====== Generate a resize event if the device doesn't do it ====== */  
+    window.addEventListener("orientationchange", handleOrientationChange, false);
+    window.addEventListener('resize', setScreenSize);
+    window.dispatchEvent(new Event("resize"));
+
     // 시작과 함께, 영화 목록 받아오기
     await drawMovies(currLang, false);
     // 탑버튼에 이벤트리스너 장착
