@@ -208,11 +208,7 @@ const searching = (_, searched) => {
         return lower.includes(searched);
     });
 
-    if(filtered.length > 0){
-        return filtered;
-    }else{
-        return [];
-    }
+    return filtered
 }
 
 // 서치버튼 클릭 혹은 엔터키 입력시 실행하는 함수
