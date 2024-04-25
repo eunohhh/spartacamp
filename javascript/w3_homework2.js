@@ -5,8 +5,6 @@ var fighter = {
     opponent: {
         fullname: 'Francis Ngannou',
         getFullname: function () {
-            console.log(this)
-
             return this.fullname;
         }
     },
@@ -15,25 +13,25 @@ var fighter = {
         return this.fullname;
     },
 
-    // getFirstName: () => {
-    //     return this.fullname.split(' ')[0];
-    // },
-
-    // getLastName: (function() {
-    //     return this.fullname.split(' ')[1];
-    // })()
-
-    getFirstName: function() {
+    getFirstName: () => {
         return this.fullname.split(' ')[0];
     },
 
-    getLastName: function() {
+    getLastName: (function() {
         return this.fullname.split(' ')[1];
-    }
+    })()
+
+    // getFirstName: function() {
+    //     return this.fullname.split(' ')[0];
+    // },
+
+    // getLastName: function() {
+    //     return this.fullname.split(' ')[1];
+    // }
 
 }
 
-// console.log('Not', fighter.opponent.getFullname(), 'VS', fighter.getName());
-// console.log('It is', fighter.getName(), 'VS', fighter.getFirstName(), fighter.getLastName);
 console.log('Not', fighter.opponent.getFullname(), 'VS', fighter.getName());
-console.log('It is', fighter.getName(), 'VS', fighter.getFirstName(), fighter.getLastName.apply({fullname : fullname}));
+console.log('It is', fighter.getName(), 'VS', fighter.getFirstName(), fighter.getLastName);
+// console.log('Not', fighter.opponent.getFullname(), 'VS', fighter.getName());
+// console.log('It is', fighter.getName(), 'VS', fighter.getFirstName(), fighter.getLastName.apply({fullname : fullname}));
