@@ -16,7 +16,7 @@ let isDoubleEnter = false;
 let page = 1;
 // 국영문 제어용 변수
 let currLang = 'ko';
-// 무한스크롤시 계속 추가되는 객체들 이전과 비교하기 위한 상태 변수
+// 무한스크롤시 계속 추가되는 객체들 담는 애...
 let pastMoviesData = {
     page : 0,
     results: [],
@@ -24,7 +24,7 @@ let pastMoviesData = {
     total_results : 0
 };
 // 무한스크롤로 객체가 추가되어도 계속 검색이 가능하도록 하기 위해 
-// 검색용으로 객체를 계속 추가하는 변수
+// 검색용으로 객체를 계속 추가하는 배열 변수
 let searchBase = [];
 
 // css --vh 변수를 위한 innerHeight 사이즈 계산
