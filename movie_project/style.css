@@ -334,8 +334,10 @@ header h1{
     position: relative;
     /* display: flex; calc(var(--vh, 1vh) * 100) */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22.5%, auto));
+    /* grid-template-columns: repeat(auto-fit, minmax(22.5%, auto)); */
+    grid-template-columns: repeat(auto-fit, 20%);
     /* grid-template-rows: repeat(auto-fill, minmax(calc(var(--vh, 1vh) * 80), auto)); */
+    justify-items: center;
     justify-content: center;
     /* align-items: center; */
     width: 100%;
@@ -415,7 +417,7 @@ header h1{
         grid-template-columns: repeat(1, 1fr);
     }
     .modal-card{
-        height: calc(var(--vh, 1vh) * 80);
+        height: calc(var(--vh, 1vh) * 60);
         width: 80%;
     }
     .modal-card .movie_poster_box {
@@ -427,7 +429,7 @@ header h1{
         height: 60%;
     }
     .modal_info{
-        height: 100%;
+        height: fit-content;
     }
     .movie_info h2{
         margin-block-start: 5px;
