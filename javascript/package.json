@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^4.1.1",
+    "googleapis": "^135.0.0"
   }
 }
