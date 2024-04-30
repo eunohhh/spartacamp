@@ -1,6 +1,7 @@
 // 이것저것 선택자
 const cardsWrapper = document.getElementById('cards_wrapper');
 const searchInput = document.getElementById('search_input');
+const searchForm = document.getElementById('search_box');
 const searchButton = document.querySelector('.search_submit');
 const langButton = document.querySelector('.lang_change');
 const topButton = document.getElementById('top_button');
@@ -117,14 +118,13 @@ const cardTemplate = (item, rating, isModal = false) => {
                 <div class='movie_info'>
                     <h2>${item.title}</h2>
                     <span>평점 : ${rating}</span>
-                    <p>${item.overview}</p>
+                    <p class="movie_info_p ${isModal ? 'modal_info' : ''}">${item.overview}</p>
                 </div>
             </div>
         `;
 
     return html;
 }
-
 
 /** movies(get 요청의 결과값.results) []
  *  adults : boolean 성인여부
@@ -215,6 +215,8 @@ const searching = (_, searched) => {
 // e : event
 // searched : string 검색어
 const handleSearchClickOrEnter = (e, searched) => {
+    e.preventDefault();
+
     // 검색 함수 실행
     const searchResult = searching(e, searched);
     // 결과 없으면 얼리 리턴 ? (검색어 입력 안했을때 라거나..)
@@ -226,6 +228,8 @@ const handleSearchClickOrEnter = (e, searched) => {
     }
     // 모달 붙여라~
     const modalFull = insertModal();
+
+    if(searchResult.length <= 4) modalFull.style.overflowY = 'hidden';
     // 카드들 html로 ~
     const movieCardsHtml = moviesToHtml(searchResult, true);
     // 모달에 이벤트리스너 달아서 
@@ -234,14 +238,16 @@ const handleSearchClickOrEnter = (e, searched) => {
         body.style.overflowY = "auto";
         if (e.target.className === 'searched_modal' || e.target.className === 'searched_inner') e.currentTarget.remove();
     });
+
     // 모달 제일 위의 첫번째 자식요소에 붙이기
-    modalFull.firstChild.insertAdjacentHTML('beforeend', movieCardsHtml)
+    modalFull.firstChild.insertAdjacentHTML('beforeend', movieCardsHtml);
 }
 
 // 키다운(엔터 눌렸을 때) 실행하는 함수
 // isDoubleEnter : bool 엔터키 반복인지
 // searched : string 검색어
 const handleKeyDown = (e, isDoubleEnter, searched) => {
+    // e.preventDefault();
     const modal = document.querySelector('.searched_modal');
     // 키가 엔터면서 반복엔터 아닐때
     if(e.key === 'Enter' && !isDoubleEnter) {
@@ -389,9 +395,9 @@ const init = async () => {
     searchInput.addEventListener("input", handleSearchInput);
     
     // 검색버튼 누를시 검색 실행하는 이벤트 리스너 장착
-    searchButton.addEventListener('click', (e) => handleSearchClickOrEnter(e, searchValue));
-    // 엔터키 눌러도 똑같이 동작하도록 하는 이벤트 리스너 장착
-    searchInput.addEventListener('keydown', (e) => handleKeyDown(e, isDoubleEnter, searchValue));
+    searchForm.addEventListener('submit', (e) => handleSearchClickOrEnter(e, searchValue));
+    // 엔터키 눌러도 똑같이 동작하도록 하는 이벤트 리스너 장착, 근데 form 으로 바꿨더니 그냥 없어도됨
+    // searchInput.addEventListener('keydown', (e) => handleKeyDown(e, isDoubleEnter, searchValue));
 }
 
 // init 함수 실행!

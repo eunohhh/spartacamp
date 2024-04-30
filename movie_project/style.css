@@ -276,10 +276,14 @@ header h1{
     align-items: center;
 }
 
-.movie_info p{
+.movie_info_p{
     text-indent: 1rem;
-    height: 18rem;
+    height: 17rem;
     overflow-y: auto;
+}
+
+.modal_info{
+    height: 60%;
 }
 
 .movie_info p::-webkit-scrollbar{
@@ -415,10 +419,15 @@ header h1{
         width: 80%;
     }
     .modal-card .movie_poster_box {
-        height: 15rem;
+        /* height: 15rem; */
+        height: 40%;
     }
     .movie_info{
-        height: 18rem;
+        /* height: 18rem; */
+        height: 60%;
+    }
+    .modal_info{
+        height: 100%;
     }
     .movie_info h2{
         margin-block-start: 5px;
